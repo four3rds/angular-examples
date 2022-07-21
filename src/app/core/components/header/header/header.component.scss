@@ -1,0 +1,20 @@
+.header-container {
+    display: inline-grid;
+    grid-template: max-content / max-content 1fr max-content;
+    margin: 4px;
+    width: calc(100% - 8px); // Is there a better way to do this?
+  }
+  
+  .header-center {
+    font-size: x-large;
+    margin-top: 8px; // What is needed to vertically center all content? "vertical-align: middle" does not work and all answers found seem overly complex.
+    text-align: center;
+  }
+  
+  .header-left {
+    text-align: left;
+  }
+  
+  .header-right {
+    text-align: right;
+  }

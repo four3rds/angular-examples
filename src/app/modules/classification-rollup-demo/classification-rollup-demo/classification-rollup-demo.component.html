@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-title>Classification Rollup Demo</mat-card-title>
+  <mat-card-subtitle>Click desired classification to add it to the page rollup</mat-card-subtitle>
+  <mat-card-content>
+    <div style="margin: 4px">
+      <mat-list>
+        <mat-list-item>
+          <button mat-raised-button color="primary" (click)="addClassificationToRollup(UNCLASSIFIED)">UNCLASSIFIED</button>
+        </mat-list-item>
+        <mat-list-item>
+          <button mat-raised-button color="primary" (click)="addClassificationToRollup(CONFIDENTIAL)">CONFIDENTIAL</button>
+        </mat-list-item>
+        <mat-list-item>
+          <button mat-raised-button color="primary" (click)="addClassificationToRollup(SECRET)">SECRET</button>
+        </mat-list-item>
+        <mat-list-item>
+          <button mat-raised-button color="primary" (click)="addClassificationToRollup(TOP_SECRET)">TOP SECRET</button>
+        </mat-list-item>
+        <mat-list-item>
+          <button mat-raised-button color="warn" (click)="addClassificationToRollup(UNDEFINED)">Reset</button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-card-content>
+</mat-card>

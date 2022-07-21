@@ -1,0 +1,5 @@
+.app-container {
+  display: grid;
+  grid-template: max-content max-content 1fr max-content max-content / 1fr;
+  height: 100%;
+}

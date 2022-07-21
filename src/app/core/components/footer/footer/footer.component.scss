@@ -1,0 +1,19 @@
+.footer-container {
+  display: inline-grid;
+  grid-template: max-content / max-content 1fr max-content;
+  margin: 4px;
+  width: calc(100% - 8px); // Is there a better way to do this?
+  // What is needed here (or below) to vertically center all content? "vertical-align: middle" does not work and all answers found seem overly complex.
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-right {
+  text-align: right;
+}
