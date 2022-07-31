@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '@app/core/modules/material/material/material.module';
+import { MaterialModule } from '@app/core/modules/material/material.module';
 import { NgModule } from '@angular/core';
 
 import { HomeRoutingModule } from './home-routing.module';
