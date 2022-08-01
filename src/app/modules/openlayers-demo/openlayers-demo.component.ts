@@ -14,7 +14,7 @@ export class OpenlayersDemoComponent {
   readonly ROBINS: Coordinate = fromLonLat([-83.42, 32.62]);
   readonly WPAFB: Coordinate = fromLonLat([-83.94, 39.81]);
 
-  center: Coordinate = this.ROBINS;
+  center: Coordinate = this.WPAFB;
 
   map!: Map;
 
