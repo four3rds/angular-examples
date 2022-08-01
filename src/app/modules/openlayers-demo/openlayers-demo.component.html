@@ -1,0 +1,28 @@
+<div class="app-container">
+    <div class="app-sub-container">
+        <mat-card>
+            <mat-card-title>Selected Sites</mat-card-title>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-raised-button color="primary" (click)="setCenter(EGLIN)">Eglin AFB</button>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <button mat-raised-button color="primary" (click)="setCenter(ROBINS)">Robins AFB</button>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <button mat-raised-button color="primary" (click)="setCenter(WPAFB)">Wright-Patterson
+                            AFB</button>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+        <app-openlayers [center]="center" [zoom]="12" (mapReady)="onMapReady($event)"></app-openlayers>
+    </div>
+    <mat-card>
+        <mat-card-title>Table</mat-card-title>
+        <mat-card-content>
+            <p>Table will go here</p>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'rollup', loadChildren: () => import('./modules/classification-rollup-demo/classification-rollup-demo.module').then(m => m.ClassificationRollupDemoModule) },
   { path: 'home', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) },
-  { path: '', pathMatch: 'full', redirectTo: 'home', }
+  { path: 'openlayers', loadChildren: () => import('./modules/openlayers-demo/openlayers-demo.module').then(m => m.OpenlayersDemoModule) },
+  { path: 'rollup', loadChildren: () => import('./modules/classification-rollup-demo/classification-rollup-demo.module').then(m => m.ClassificationRollupDemoModule) },
+  { path: '', pathMatch: 'full', redirectTo: 'home', },
 ];
 
 @NgModule({

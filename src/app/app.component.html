@@ -1,4 +1,4 @@
-<div class="height100 {{ darkMode ? 'dark-theme' : '' }}">
+<div class="hw100 {{ darkMode ? 'dark-theme' : '' }}">
   <!--<div class="mat-app-background">-->
   <mat-sidenav-container style="height: 100%" class="mat-app-background">
     <mat-sidenav #sidenav>
@@ -11,6 +11,9 @@
             <a routerLink="/home" (click)="sidenav.toggle()">Home</a>
           </mat-list-item>
           <mat-list-item>
+            <a routerLink="/openlayers" (click)="sidenav.toggle()">Open Layers</a>
+          </mat-list-item>
+          <mat-list-item>
             <a routerLink="/rollup" (click)="sidenav.toggle()">Rollup</a>
           </mat-list-item>
         </mat-list>
@@ -19,20 +22,19 @@
     <mat-sidenav-content>
       <div class="app-container">
         <div>
-          <app-header
-            [showMenuButton]="showMenuButton"
-            (helpClicked)="showHelp()"
-            (menuClicked)="sidenav.toggle()"
-            (settingsClicked)="showSettings()"
-            [(darkMode)]="darkMode"
-          >
+          <app-header [showMenuButton]="showMenuButton" (helpClicked)="showHelp()" (menuClicked)="sidenav.toggle()"
+            (settingsClicked)="showSettings()" [(darkMode)]="darkMode">
           </app-header>
         </div>
-        <div><app-classification-banner></app-classification-banner></div>
+        <div>
+          <app-classification-banner></app-classification-banner>
+        </div>
         <div>
           <router-outlet></router-outlet>
         </div>
-        <div><app-classification-banner></app-classification-banner></div>
+        <div>
+          <app-classification-banner></app-classification-banner>
+        </div>
         <div>
           <app-footer></app-footer>
         </div>

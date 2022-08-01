@@ -1,13 +1,10 @@
 <mat-toolbar>
-  <button
-    *ngIf="showMenuButton"
-    mat-icon-button
-    (click)="menuClicked.emit(true)"
-  >
+  <button *ngIf="showMenuButton" mat-icon-button (click)="menuClicked.emit(true)">
     <mat-icon>menu</mat-icon>
   </button>
   <span *ngIf="!showMenuButton">
     <a routerLink="/home">Home</a>&nbsp;&nbsp;&nbsp;
+    <a routerLink="/openlayers">Open Layers</a>&nbsp;&nbsp;&nbsp;
     <a routerLink="/rollup">Rollup</a>
   </span>
   <span class="spacer"></span>

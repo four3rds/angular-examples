@@ -14,7 +14,7 @@ import { ClassificationBannerComponent } from './core/components/classification-
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ClassificationBannerComponent,
+    ClassificationBannerComponent
   ],
   imports: [
     AppRoutingModule,

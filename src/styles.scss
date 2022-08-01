@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/ol/ol.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "./styles/theme";
 
@@ -17,8 +18,9 @@ mat-card {
   margin: 4px;
 }
 
-.height100 {
-  height: 100%; // Goofy way to make this work
+.hw100 {
+  height: 100%;
+  width: 100%;
 }
 
 .spacer {

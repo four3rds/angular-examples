@@ -23,10 +23,13 @@
       "dom"
     ],
     "paths": {
-      "@app/*": [ "src/app/*" ]
+      "@app/*": [
+        "src/app/*"
+      ]
     },
   },
   "angularCompilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,

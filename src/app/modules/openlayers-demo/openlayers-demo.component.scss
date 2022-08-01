@@ -1,0 +1,16 @@
+.app-container {
+    display: grid;
+    grid-template: 1fr 1fr / 1fr;
+    height: 100%;
+}
+
+.app-sub-container {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+    height: 100%;
+}
+
+.map-card-content {
+    height: 100%;
+    width: 100%;
+}

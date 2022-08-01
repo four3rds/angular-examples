@@ -13,7 +13,7 @@ import { HomeComponent } from './home.component';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    MaterialModule, // MaterialModule must be imported else styling doesn't work
+    MaterialModule, // MaterialModule must be imported else styling doesn't work,
   ]
 })
 export class HomeModule { }
