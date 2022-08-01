@@ -1,28 +1,36 @@
-<div class="app-container">
-    <div class="app-sub-container">
-        <mat-card>
-            <mat-card-title>Selected Sites</mat-card-title>
-            <mat-card-content>
-                <mat-list>
-                    <mat-list-item>
-                        <button mat-raised-button color="primary" (click)="setCenter(EGLIN)">Eglin AFB</button>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <button mat-raised-button color="primary" (click)="setCenter(ROBINS)">Robins AFB</button>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <button mat-raised-button color="primary" (click)="setCenter(WPAFB)">Wright-Patterson
-                            AFB</button>
-                    </mat-list-item>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
-        <app-openlayers [center]="center" [zoom]="12" (mapReady)="onMapReady($event)"></app-openlayers>
-    </div>
-    <mat-card>
-        <mat-card-title>Table</mat-card-title>
-        <mat-card-content>
-            <p>Table will go here</p>
-        </mat-card-content>
-    </mat-card>
+<div class="tefa-container">
+  <mat-card>
+    <mat-card-title>Facility Groups</mat-card-title>
+    <mat-card-content class="facility-group-names-list">
+      <mat-list role="list" *ngIf="facilityGroupNames">
+        <mat-list-item
+          role="listitem"
+          *ngFor="let facilityGroupName of facilityGroupNames"
+        >
+          <mat-checkbox
+            class="example-margin"
+            (change)="toggleFacilityGroup(facilityGroupName)"
+            >{{ facilityGroupName }}</mat-checkbox
+          >
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-content class="hw100">
+      <div class="hw100">
+        <app-openlayers
+          [center]="center"
+          [zoom]="1"
+          (mapReady)="onMapReady($event)"
+        ></app-openlayers>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card style="grid-column-start: 1; grid-column-end: 3;">
+    <mat-card-title>Table</mat-card-title>
+    <mat-card-content>
+      <p>Table will go here</p>
+    </mat-card-content>
+  </mat-card>
 </div>

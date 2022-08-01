@@ -1,16 +1,16 @@
-.app-container {
-    display: grid;
-    grid-template: 1fr 1fr / 1fr;
-    height: 100%;
+.tefa-container {
+  background-color: lightgray;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: 40% 60%;
+  height: 100%;
 }
 
-.app-sub-container {
-    display: grid;
-    grid-template: 1fr / 1fr 1fr;
-    height: 100%;
+.facility-group-names-list {
+  height: 90%;
+  overflow-y: scroll;
 }
 
-.map-card-content {
-    height: 100%;
-    width: 100%;
+.mat-list-item {
+  height: unset;
 }
