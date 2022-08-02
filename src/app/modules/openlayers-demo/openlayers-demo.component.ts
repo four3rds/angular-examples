@@ -7,7 +7,6 @@ import { TefaService } from '@app/shared/services/tefa/tefa.service';
 import { Feature, Map as OLMap } from 'ol';
 import { Coordinate } from 'ol/coordinate';
 import { Point } from 'ol/geom';
-import BaseLayer from 'ol/layer/Base';
 import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
@@ -32,131 +31,21 @@ export class OpenlayersDemoComponent implements OnInit {
 
   private facilityGroupAssociations!: Map<string, FacilityGroupAssociation>;
 
-  private facilityGroupLayers: Map<string, VectorLayer<VectorSource>> = new Map<
-    string,
-    VectorLayer<VectorSource>
-  >();
-
   facilityGroupNames!: string[];
+
+  private facilityGroupMembershipCounts = new Map<string, number>();
 
   map!: OLMap;
 
   private menuItemAssociations!: Map<string, MenuItemAssociation>;
 
+  readonly plottedFacilityGroups = new Set<string>;
+
   private productAssociations!: Map<string, ProductAssociation>;
 
-  constructor(private tefaService: TefaService) {}
+  readonly source = new VectorSource();
 
-  private addPointForMenuItemAssociation(
-    features: Array<Feature>,
-    menuItemAssociationId: string
-  ): void {
-    if (
-      this.menuItemAssociations &&
-      this.menuItemAssociations.get(menuItemAssociationId) &&
-      this.menuItemAssociations.get(menuItemAssociationId)!.productAssociationId
-    ) {
-      this.addPointForProductAssociation(
-        features,
-        this.menuItemAssociations.get(menuItemAssociationId)!
-          .productAssociationId
-      );
-    } else {
-      console.log(
-        'Menu Item Association ' + menuItemAssociationId + ' not found'
-      );
-    }
-  }
-
-  private addPointForProductAssociation(
-    features: Array<Feature>,
-    productAssociationId: string
-  ): void {
-    if (
-      this.productAssociations &&
-      this.productAssociations.has(productAssociationId)
-    ) {
-      this.addPointForFacility(
-        features,
-        this.productAssociations.get(productAssociationId)!.facilityId
-      );
-    } else {
-      console.log('Product Association ' + productAssociationId + ' not found');
-    }
-  }
-
-  private addPointForFacility(
-    features: Array<Feature>,
-    facilityId: string
-  ): void {
-    if (this.facilities && this.facilities.has(facilityId)) {
-      let facility = this.facilities.get(facilityId);
-      features.push(
-        new Feature({
-          facility: this.facilities.get(facilityId),
-          geometry: new Point(
-            fromLonLat([
-              this.dmsToDd(this.facilities.get(facilityId)!.longitudeDms),
-              this.dmsToDd(this.facilities.get(facilityId)!.latitudeDms),
-            ])
-          ),
-        })
-      );
-      console.log(
-        'Push::' +
-          this.dmsToDd(this.facilities.get(facilityId)!.longitudeDms) +
-          '::' +
-          this.dmsToDd(this.facilities.get(facilityId)!.latitudeDms)
-      );
-    } else {
-      console.log('Facility ' + facilityId + ' not found');
-    }
-  }
-
-  private addPointsForFacilityGroupName(
-    features: Array<Feature>,
-    facilityGroupName: string
-  ): void {
-    if (this.facilityGroupAssociations) {
-      this.facilityGroupAssociations.forEach((value, key, map) => {
-        if (value.facilityGroupName == facilityGroupName) {
-          this.addPointForMenuItemAssociation(
-            features,
-            value.menuItemAssociationId
-          );
-        }
-      });
-    } else {
-      console.log('Facility Group Associations not yet populated');
-    }
-  }
-
-  private createFacilityGroupLayer(
-    facilityGroupName: string
-  ): VectorLayer<VectorSource> | null {
-    let layer: VectorLayer<VectorSource> | null = null;
-    const features: Array<Feature> = [];
-    this.addPointsForFacilityGroupName(features, facilityGroupName);
-    if (features.length > 0) {
-      const source = new VectorSource();
-      source.addFeatures(features);
-      layer = new VectorLayer({
-        source: source,
-        style: new Style({
-          image: new Circle({
-            radius: 6,
-            stroke: new Stroke({
-              color: '#fff',
-            }),
-            fill: new Fill({
-              color: '#3399CC',
-            }),
-          }),
-        }),
-      });
-    }
-    return layer;
-  }
+  constructor(private tefaService: TefaService) { }
 
   private dmsToDd(dms: string): number {
     let dd = 0;
@@ -231,7 +120,21 @@ export class OpenlayersDemoComponent implements OnInit {
   }
 
   onMapReady(map: OLMap) {
-    this.map = map;
+    this.map = map;    
+    this.map.addLayer(new VectorLayer({
+      source: this.source,
+      style: new Style({
+        image: new Circle({
+          radius: 6,
+          stroke: new Stroke({
+            color: '#fff',
+          }),
+          fill: new Fill({
+            color: '#3399CC',
+          }),
+        }),
+      }),
+    }));
   }
 
   setCenter(coordinate: Coordinate) {
@@ -264,40 +167,87 @@ export class OpenlayersDemoComponent implements OnInit {
     );
   }
 
-  toggleFacilityGroup(facilityGroupName: string): void {
-    if (this.map) {
-      let layer = this.facilityGroupLayers.get(facilityGroupName);
-
-      if (layer instanceof BaseLayer) {
-        if (this.map.removeLayer(layer)) {
-          console.log(
-            layer.getSource()?.getFeatures().length + ' points removed'
-          );
-        } else {
-          this.map.addLayer(layer);
-          console.log(
-            layer.getSource()?.getFeatures().length + ' points added'
-          );
-        }
+  private toggleFacility(facilityId: string, add: boolean): void {
+    let facilityGroupMembershipCount: number = 1;
+    if (add) {
+      if (!this.facilityGroupMembershipCounts.has(facilityId)) {
+        let feature: Feature = new Feature({
+          geometry: new Point(
+            fromLonLat([
+              this.dmsToDd(this.facilities.get(facilityId)!.longitudeDms),
+              this.dmsToDd(this.facilities.get(facilityId)!.latitudeDms),
+            ])
+          ),
+        });
+        feature.setId(facilityId);
+        this.source.addFeature(feature);
+        console.log('Facility ' + facilityId + ' added to map');
+        console.log("this.source.getFeatures().length=" + this.source.getFeatures().length);
       } else {
-        let layer: VectorLayer<VectorSource> | null =
-          this.createFacilityGroupLayer(facilityGroupName);
-        if (layer) {
-          this.facilityGroupLayers.set(facilityGroupName, layer);
-          this.map.addLayer(layer);
-          console.log('Layer created');
-          console.log(
-            layer.getSource()?.getFeatures().length + ' points added'
-          );
-        } else {
-          console.log(
-            'Unable to create layer for Facility Group Name ' +
-              facilityGroupName
-          );
-        }
+        facilityGroupMembershipCount = this.facilityGroupMembershipCounts.get(facilityId)! + 1;
       }
     } else {
-      console.log('Map not set');
+      facilityGroupMembershipCount = this.facilityGroupMembershipCounts.get(facilityId)! - 1;
+    }
+    if (facilityGroupMembershipCount != 0) {
+      this.facilityGroupMembershipCounts.set(facilityId, facilityGroupMembershipCount);
+    } else {
+      this.source.removeFeature(this.source.getFeatureById(facilityId)!);
+      this.facilityGroupMembershipCounts.delete(facilityId);
+      console.log('Facility ' + facilityId + ' removed from map');
+      console.log("this.source.getFeatures().length=" + this.source.getFeatures().length);
     }
   }
+
+  toggleFacilityGroup(facilityGroupName: string) {
+    if (this.facilityGroupAssociations) {
+      const add = !this.plottedFacilityGroups.has(facilityGroupName);
+      const toggledFacilityIDs = new Set<string>();
+      this.facilityGroupAssociations.forEach((value, key, map) => {
+        if (value.facilityGroupName == facilityGroupName) {
+          this.toggleMenuItemAssociation(value.menuItemAssociationId, add, toggledFacilityIDs);
+        }
+      });
+      if (add) {
+        this.plottedFacilityGroups.add(facilityGroupName);
+        console.log('Facility Group ' + facilityGroupName + ' added');
+      } else {
+        this.plottedFacilityGroups.delete(facilityGroupName);
+        console.log('Facility Group ' + facilityGroupName + ' removed');
+      }
+    } else {
+      console.log('Facility Group Associations not yet populated');
+    }
+  } 
+
+  private toggleMenuItemAssociation(menuItemAssociationId: string, add: boolean, toggledFacilityIDs: Set<string>): void {
+    if (
+      this.menuItemAssociations &&
+      this.menuItemAssociations.get(menuItemAssociationId) &&
+      this.menuItemAssociations.get(menuItemAssociationId)!.productAssociationId
+    ) {
+      this.toggleProductAssociation(this.menuItemAssociations.get(menuItemAssociationId)!.productAssociationId, add, toggledFacilityIDs);
+    } else {
+      console.log(
+        'Menu Item Association ' + menuItemAssociationId + ' not found or has no Product Association ID'
+      );
+    }
+  }
+
+  private toggleProductAssociation(productAssociationId: string, add: boolean, toggledFacilityIDs: Set<string>): void {
+    if (
+      this.productAssociations &&
+      this.productAssociations.has(productAssociationId) && 
+      this.productAssociations.get(productAssociationId)!.facilityId) {
+      if (!toggledFacilityIDs.has(this.productAssociations.get(productAssociationId)!.facilityId)) {
+        this.toggleFacility(this.productAssociations.get(productAssociationId)!.facilityId, add);
+        toggledFacilityIDs.add(this.productAssociations.get(productAssociationId)!.facilityId);
+      } else {
+        console.log('Skipping Facility ' + this.productAssociations.get(productAssociationId)!.facilityId + ' -- already toggled');
+      }
+    } else {
+      console.log('Product Association ' + productAssociationId + ' not found or has no Facility ID');
+    }
+  }
+
 }
