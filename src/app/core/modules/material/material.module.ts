@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -15,6 +16,7 @@ import { NgModule } from '@angular/core';
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatGridListModule,
     MatIconModule,
     MatListModule,
     MatSidenavModule,
@@ -24,10 +26,11 @@ import { NgModule } from '@angular/core';
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatGridListModule,
     MatIconModule,
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
   ],
 })
-export class MaterialModule {}
+export class MaterialModule { }
