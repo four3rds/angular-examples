@@ -10,6 +10,9 @@ export class HeaderComponent {
   @Input()
   darkMode: boolean = false;
 
+  @Input()
+  title!: string;
+
   @Output()
   darkModeChange = new EventEmitter<boolean>();
 

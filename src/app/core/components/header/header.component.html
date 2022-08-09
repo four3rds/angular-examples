@@ -5,6 +5,8 @@
     </button>
   </div>
   <span class="spacer"></span>
+  <p>{{ title }}</p>
+  <span class="spacer"></span>
   <div>
     <button mat-mini-fab color="basic" (click)="darkModeChange.emit(!darkMode)">
       <mat-icon>{{ darkMode ? "light_mode" : "dark_mode" }}</mat-icon>

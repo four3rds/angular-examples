@@ -21,8 +21,8 @@
       </mat-list>
     </mat-sidenav>
     <mat-sidenav-content class="app-container">
-      <app-header (helpClicked)="showHelp()" (menuClicked)="sidenav.toggle()" (settingsClicked)="showSettings()"
-        [(darkMode)]="darkMode">
+      <app-header [title]="title" (helpClicked)="showHelp()" (menuClicked)="sidenav.toggle()"
+        (settingsClicked)="showSettings()" [(darkMode)]="darkMode">
       </app-header>
       <app-classification-banner></app-classification-banner>
       <div class="app-content">
