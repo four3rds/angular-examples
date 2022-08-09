@@ -1,4 +1,9 @@
 mat-card {
-    height: 93%;
+    height: calc(100vh - 172px); // Any way to retrieve the value to subtract at run time instead of hard-coding it?
     overflow: hidden;
+}
+
+.scrolling-content {
+    height: calc(100vh - 222px); // Any way to retrieve the value to subtract at run time instead of hard-coding it?
+    overflow: auto;
 }
