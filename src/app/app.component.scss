@@ -1,5 +1,14 @@
+mat-sidenav-container {
+  height: 100%;
+}
+
 .app-container {
   display: grid;
   grid-template: max-content max-content 1fr max-content max-content / 1fr;
   height: 100%;
+}
+
+.app-content {
+  height: 100%;
+  overflow: auto;
 }

@@ -1,50 +1,25 @@
 <mat-toolbar>
-  <button *ngIf="showMenuButton" mat-icon-button (click)="menuClicked.emit(true)">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span *ngIf="!showMenuButton">
-    <a routerLink="/home">Home</a>&nbsp;&nbsp;&nbsp;
-    <a routerLink="/openlayers">Open Layers</a>&nbsp;&nbsp;&nbsp;
-    <a routerLink="/rollup">Rollup</a>&nbsp;&nbsp;&nbsp;
-  </span>
-  <span class="spacer"></span>
-  <button mat-icon-button (click)="darkModeChange.emit(!darkMode)">
-    <mat-icon>{{ darkMode ? "light_mode" : "dark_mode" }}</mat-icon>
-  </button>
-  <button mat-icon-button (click)="settingsClicked.emit(true)">
-    <mat-icon>settings</mat-icon>
-  </button>
-  <button mat-icon-button (click)="helpClicked.emit(true)">
-    <mat-icon>help</mat-icon>
-  </button>
-</mat-toolbar>
-<!--
-<div class="header-container">
-  <div class="header-left">
-    <button
-      *ngIf="showMenuButton"
-      mat-icon-button
-      (click)="menuClicked.emit(true)"
-    >
+  <div>
+    <button mat-mini-fab color="primary" (click)="menuClicked.emit(true)">
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <div class="header-center">
-    <span *ngIf="!showMenuButton">
-      <a routerLink="/home">Home</a>&nbsp;&nbsp;&nbsp;
-      <a routerLink="/rollup">Rollup</a>
-    </span>
-  </div>
-  <div class="header-right">
-    <button mat-icon-button (click)="darkModeChange.emit(!darkMode)">
+  <span class="spacer"></span>
+  <div>
+    <button mat-mini-fab color="basic" (click)="darkModeChange.emit(!darkMode)">
       <mat-icon>{{ darkMode ? "light_mode" : "dark_mode" }}</mat-icon>
     </button>
-    <button mat-icon-button (click)="settingsClicked.emit(true)">
+  </div>
+  &nbsp;
+  <div>
+    <button mat-mini-fab color="basic" (click)="settingsClicked.emit(true)">
       <mat-icon>settings</mat-icon>
     </button>
-    <button mat-icon-button (click)="helpClicked.emit(true)">
+  </div>
+  &nbsp;
+  <div>
+    <button mat-mini-fab color="basic" (click)="helpClicked.emit(true)">
       <mat-icon>help</mat-icon>
     </button>
   </div>
-</div>
--->
+</mat-toolbar>

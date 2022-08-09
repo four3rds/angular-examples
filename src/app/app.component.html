@@ -1,45 +1,35 @@
 <div class="hw100 {{ darkMode ? 'dark-theme' : '' }}">
-  <!--<div class="mat-app-background">-->
-  <mat-sidenav-container style="height: 100%" class="mat-app-background">
+  <mat-sidenav-container>
     <mat-sidenav #sidenav>
-      <div style="margin: 4px">
-        <button mat-icon-button (click)="sidenav.toggle()">
-          <mat-icon>close</mat-icon>
-        </button>
-        <mat-list>
-          <mat-list-item>
-            <a routerLink="/home" (click)="sidenav.toggle()">Home</a>
-          </mat-list-item>
-          <mat-list-item>
-            <a routerLink="/openlayers" (click)="sidenav.toggle()">Open Layers</a>
-          </mat-list-item>
-          <mat-list-item>
-            <a routerLink="/rollup" (click)="sidenav.toggle()">Rollup</a>
-          </mat-list-item>
-        </mat-list>
-      </div>
+      <mat-toolbar>
+        <div>
+          <button mat-mini-fab color="basic" (click)="sidenav.toggle()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+      <mat-list>
+        <mat-list-item>
+          <a routerLink="/home" (click)="sidenav.toggle()">Home</a>
+        </mat-list-item>
+        <mat-list-item>
+          <a routerLink="/openlayers" (click)="sidenav.toggle()">Open Layers</a>
+        </mat-list-item>
+        <mat-list-item>
+          <a routerLink="/rollup" (click)="sidenav.toggle()">Rollup</a>
+        </mat-list-item>
+      </mat-list>
     </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="app-container">
-        <div>
-          <app-header [showMenuButton]="showMenuButton" (helpClicked)="showHelp()" (menuClicked)="sidenav.toggle()"
-            (settingsClicked)="showSettings()" [(darkMode)]="darkMode">
-          </app-header>
-        </div>
-        <div>
-          <app-classification-banner></app-classification-banner>
-        </div>
-        <div>
-          <router-outlet></router-outlet>
-        </div>
-        <div>
-          <app-classification-banner></app-classification-banner>
-        </div>
-        <div>
-          <app-footer></app-footer>
-        </div>
+    <mat-sidenav-content class="app-container">
+      <app-header (helpClicked)="showHelp()" (menuClicked)="sidenav.toggle()" (settingsClicked)="showSettings()"
+        [(darkMode)]="darkMode">
+      </app-header>
+      <app-classification-banner></app-classification-banner>
+      <div class="app-content">
+        <router-outlet></router-outlet>
       </div>
+      <app-classification-banner></app-classification-banner>
+      <app-footer></app-footer>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <!--</div>-->
 </div>

@@ -10,9 +10,9 @@ const NARROW_WIDTH_THRESHOLD: number = 600;
 export class AppComponent implements OnInit {
   darkMode: boolean = false;
 
-  showMenuButton: boolean = false;
-
   sideNavOpened: boolean = false;
+
+  title = "Application Title";
 
   windowWidth: number = -1;
 
@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
   private setWindowWidth(windowWidth: number) {
     if (windowWidth != this.windowWidth) {
       this.windowWidth = windowWidth;
-      this.showMenuButton = this.windowWidth < NARROW_WIDTH_THRESHOLD;
     }
   }
 

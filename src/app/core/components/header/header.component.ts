@@ -10,9 +10,6 @@ export class HeaderComponent {
   @Input()
   darkMode: boolean = false;
 
-  @Input()
-  showMenuButton: boolean = false;
-
   @Output()
   darkModeChange = new EventEmitter<boolean>();
 
